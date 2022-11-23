@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+<title>Presscribe.bd</title>
+
+<link rel="stylesheet" href="{% static '' %}assets/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="{% static '' %}assets/plugins/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href="{% static '' %}assets/plugins/fontawesome/css/all.min.css">
+
+<link rel="stylesheet" href="{% static '' %}assets/css/feather.css">
+
+<link rel="stylesheet" href="{% static '' %}assets/css/owl.carousel.min.css">
+
+<link rel="stylesheet" href="{% static '' %}assets/css/aos.css">
+
+<link rel="stylesheet" href="{% static '' %}assets/css/style.css">
+</head>
+
+<body class="home-fifteen">
+
+<div class="main-wrapper">
+
+<header class="header">
+<div class="container">
+<div class="nav-bg-fifteen">
+<nav class="navbar navbar-expand-lg header-nav nav-transparent">
+<div class="navbar-header">
+<a id="mobile_btn" href="javascript:void(0);"> <span class="bar-icon">
+<span></span>
+<span></span>
+<span></span>
+</span>
+</a>
+<a href="index.html" class="navbar-brand logo">
+<img src="{% static '' %}assets/img2/prescribe_icon.png" class="img-fluid" alt="Logo">
+</a>
+</div>
+<div class="main-menu-wrapper">
+<div class="menu-header">
+<a href="index.html" class="menu-logo">
+<img src="{% static '' %}assets/img2/prescribe_icon.png" class="img-fluid" alt="Logo">
+</a>
+<a id="menu_close" class="menu-close" href="javascript:void(0);"> <i class="fas fa-times"></i>
+</a>
+</div>
+<ul class="main-nav black-font">
+<li class="has-submenu menu-effect active"> <a href="#">Home <i class="fas fa-chevron-down"></i></a>
+<ul class="submenu">
+<li><a href="#">user profile</a></li>
+<li><a href="#">Home 2</a></li>
+</ul>
+</li>
+<li> <a href="#" target="_blank">Admin</a>
+</li>
+</ul>
+</div>
+<ul class="nav header-navbar-rht">
+<li class="nav-item">
+<a class="nav-link btn-five btn-fifteen" href="{% url 'Accountapp:sign_in'%}">Sign In</a>
+</li>
+<li class="nav-item">
+<a class="nav-link btn-five-light btn-fifteen-light" href="{% url 'Accountapp:regi_type'%}">Sign Up</a>
+</li>
+</ul>
+
+
+    
+</nav>
+</div>
+</div>
+</header>
+
+{% block body_block %}
+
+<section class="home-section-fifteen">
+<div class="container">
+<div class="row ">
+<div class="col-lg-6">
+<div class="home-fifteen-banner aos" data-aos="fade-up">
+<img src="{% static '' %}assets/img2/shek_hasina.png" alt="">
+</div>
+</div>
+<div class="col-lg-6">
+<div class="title-block aos" data-aos="fade-up" data-aos-delay="100">
+<h2>সেবার বৈধতা যাচাই করুন</h2>
+<h2>অবৈধ সেবা আদান-প্রদান কে না বলুন</h2>
+<p>
+    The progress of health care in Bangladesh is quite commendable
+     but there is no complacency. Ongoing corruption, adulterated drugs,
+      fake doctors, malpractice and various unethical complications including 
+      patient harassment have created citizens' distrust of the state's medical 
+      system and medical technicians and have made healthcare a killer.
+</p>
+</div>
+
+</section>
+
+
+
+<section class="gallery-tab-section aos" data-aos="fade-up">
+<div class="water-mark-icons">
+<img src="{% static '' %}assets/img/poour-doctor-watermark-2.png" alt="">
+<img src="{% static '' %}assets/img/our-doctor-watermark.png" alt="">
+<img src="{% static '' %}assets/img/rotate-bg.png" alt="">
+</div>
+<div class="container">
+<div class="row">
+<div class="col-lg-12">
+<div class="home-fifteen-section-title text-center">
+<h2>Bangladesh <span>health organizations</span></h2>
+</div>
+</div>
+<div class="col-lg-12">
+<div class="button-group filters-button-group">
+<button class="button is-checked" data-filter="*">All</button>
+<button class="button" data-filter=".neurology">Neurology</button>
+<button class="button" data-filter=".orthopedic">Orthopedic</button>
+<button class="button" data-filter=".cardiologist">Cardiologist</button>
+<button class="button" data-filter=".dentist">Dentist</button>
+<button class="button" data-filter=".urology">Urology</button>
+</div>
+<div id="grid-container" class="transitions-enabled fluid masonry js-masonry grid">
+<article class="neurology urology sea over-box">
+<a href="https://dghs.gov.bd/">
+<img src="{% static '' %}assets/img2/helthministry.jpg" class="img-responsive" />
+<div class="gallery-after">
+<div class="gallery-after-content">
+<div class="gallery-hover-text">
+<h6>স্বাস্থ্য অধিদপ্তর</h6>
+<p>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</p>
+</div>
+<i class="feather-link"> </i>
+</div>
+</div>
+</a>
+
+</article>
+<article class="neurology orthopedic over-box">
+    <a href="http://dgda.portal.gov.bd/forms/form/portal/-">
+<img src="{% static '' %}assets/img/gallery-tab-img-2.jpg" class="img-responsive" />
+<div class="gallery-after">
+<div class="gallery-after-content">
+<div class="gallery-hover-text">
+<h6>নকল ঔষুধ সংক্রান্ত অভিযোগ </h6> 
+<p>ঔষধ প্রশাসন অধিদপ্তর</p>
+</div>
+<i class="feather-link"></i>
+</div>
+</div>
+</article>
+</a>
+
+
+<article class="sea over-box">
+<img src="{% static '' %}assets/img/gallery-tab-img-3.jpg" class="img-responsive" />
+<div class="gallery-after">
+<div class="gallery-after-content">
+<div class="gallery-hover-text">
+<h6>Blood Pressure</h6>
+<p>Cardiology</p>
+</div>
+<i class="feather-link"></i>
+</div>
+</div>
+</article>
+<article class="neurology urology rock sea over-box">
+<img src="{% static '' %}assets/img/gallery-tab-img-4.jpg" class="img-responsive" />
+<div class="gallery-after">
+<div class="gallery-after-content">
+<div class="gallery-hover-text">
+<h6>Blood Pressure</h6>
+<p>Cardiology</p>
+</div>
+<i class="feather-link"></i>
+</div>
+</div>
+</article>
+<article class="neurology sea over-box">
+<img src="{% static '' %}assets/img/gallery-tab-img-5.jpg" class="img-responsive" />
+<div class="gallery-after">
+<div class="gallery-after-content">
+<div class="gallery-hover-text">
+<h6>Blood Pressure</h6>
+<p>Cardiology</p>
+</div>
+<i class="feather-link"></i>
+</div>
+</div>
+</article>
+<article class="orthopedic cardiologist over-box">
+<img src="{% static '' %}assets/img/gallery-tab-img-6.jpg" class="img-responsive" />
+<div class="gallery-after">
+<div class="gallery-after-content">
+<div class="gallery-hover-text">
+<h6>Blood Pressure</h6>
+<p>Cardiology</p>
+</div>
+<i class="feather-link"></i>
+</div>
+</div>
+</article>
+<article class="urology dentist over-box">
+<img src="{% static '' %}assets/img/gallery-tab-img-7.jpg" class="img-responsive" />
+<div class="gallery-after">
+<div class="gallery-after-content">
+<div class="gallery-hover-text">
+<h6>Blood Pressure</h6>
+<p>Cardiology</p>
+</div>
+<i class="feather-link"></i>
+</div>
+</div>
+</article>
+<article class="sea dentist over-box">
+<img src="{% static '' %}assets/img/gallery-tab-img-8.jpg" class="img-responsive" />
+<div class="gallery-after">
+<div class="gallery-after-content">
+<div class="gallery-hover-text">
+<h6>Blood Pressure</h6>
+<p>Cardiology</p>
+</div>
+<i class="feather-link"></i>
+</div>
+</div>
+</article>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="home-fifteen-why-us">
+<div class="water-mark-icons">
+<img src="{% static '' %}assets/img2/why-us-water-mark.png" alt="">
+</div>
+<div class="container">
+<div class="row">
+<div class="col-lg-6">
+<div class="row">
+<div class="col-lg-12 aos" data-aos="fade-up">
+<div class="home-fifteen-section-title">
+<h2>Why do we come <span> under this system?</span></h2>
+</div>
+</div>
+<div class="col-lg-12">
+<div class="why-us-paragraph aos" data-aos="fade-up" data-aos-delay="200">
+<p>According to the Bangladesh Medical and Dental Council (BMDC), there are more than two and a half hundred fake doctors in the capital alone, more than 20,000 across the country. But in reality, more fake doctors than the figures given by BMDC are spreading across the country. The number of fake doctors as well as 'specialist doctors' with fake degrees is not less.
+    Most of the medical services in private hospitals-clinics-nursing homes are being run by doctors with 90% fake degrees.   [Wednesday, July 4, 2018 00:00 Bangladesh Pratidin]
+    144 fake doctors in only one upazila! [ banglatribune : 16 November 2020, 14:00 ]
+</p>
+<p>
+In June 2019, the Department of Drug Administration informed the High Court that adulterated and expired drugs worth Tk340.75 million had been destroyed in the last three months. [19 September 2021, dailynayadiganta]
+According to statistics, 15 percent of the world's medicines are counterfeit. In some countries in Asia and Africa, the amount of counterfeit drugs is 50 percent. In Angola, counterfeit drugs account for 80 percent of all drugs.
+Countries such as Australia, Canada, Japan, New Zealand, Western Europe, and the United States account for less than 1 percent of counterfeit, adulterated, and substandard drugs. [16 February 2017, jugantor]
+
+</p>
+<p>By making and marketing counterfeit and adulterated medicines of various reputed companies and brands:</p>
+</div>
+<div class="why-us-points aos" data-aos="fade-up" data-aos-delay="400">
+<ul>
+<li>The reputation of the specialist doctor is being tarnished.</li>
+<li> Patients hoping for a cure are heading for death. </li>
+<li>Patients and relatives of patients are losing faith in doctors and moving abroad in search of better treatment.</li>
+<li>The reputation of the specialist doctor is being tarnished.</li>
+<li>Quis ipsum suspendisse ultrices gravida.</li>
+<li>We provide high-quality services for the whole family.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-6 aos" data-aos="fade-up" data-aos-delay="500">
+<div class="why-us-container-img">
+<img src="{% static '' %}assets/img2/why-us-pics.png" alt="">
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+{% endblock %}
+
+<section class="home-fifteen-footer">
+<div class="container">
+<div class="row">
+<div class="col-lg-6 col-md-6">
+<div class="home-fifteen-footer-block">
+<div class="foot-title">
+</div>
+<div class="foot-title">
+    <h6>Developer info</h6>
+</div>
+<p>Md.Belal Hossain (MBH Mishu) <br> B.Sc in Software Engineering </p>
+<div class="foot-social-icons">
+<a href="#" class="me-3"><i class="feather-facebook"></i></a>
+<a href="#" class="me-3"><i class="feather-instagram"></i></a>
+<a href="#" class="me-3"><i class="feather-linkedin"></i></a>
+<a href="#"><i class="feather-twitter"></i></a>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-6 col-md-6">
+<div class="home-fifteen-footer-block">
+<div class="foot-title">
+<h6>Behind the scene</h6>
+</div>
+<div class="foot-list-address">
+<p>As a child, I had a dream to serve people by becoming a doctor. But it didn't happen anymore.
+    So I have decided that I want to play a role in healthcare so that I don't regret not being a doctor.
+</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<hr class="foot-line">
+<div class="row">
+<div class="col-lg-12">
+<div class="foot-copy-rights">
+<p class="mb-0">presscribe bd.. All rights reserved.</p>
+<div class="foot-terms-policy">
+<a href="#">MBH Mishu</a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+
+
+<script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="{% static '' %}assets/js/jquery-3.6.0.min.js"></script>
+
+<script src="{% static '' %}assets/js/bootstrap.bundle.min.js"></script>
+
+<script src="{% static '' %}assets/js/owl.carousel.min.js"></script>
+
+<script src="{% static '' %}assets/js/slick.js"></script>
+
+<script src="{% static '' %}assets/js/feather.min.js"></script>
+
+<script src="{% static '' %}assets/js/aos.js"></script>
+
+<script src="{% static '' %}assets/js/isotope.pkgd.min.js"></script>
+
+<script src="{% static '' %}assets/js/script.js"></script>
+</body>
+
+</html>

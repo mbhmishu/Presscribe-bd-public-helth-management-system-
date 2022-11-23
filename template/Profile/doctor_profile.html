@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+{% extends 'Profile/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+
+
+{% block body_block %}
+
+
+
+<div class="content">
+<div class="container">
+
+<div class="card">
+<div class="card-body">
+<div class="doctor-widget">
+<div class="doc-info-left">
+<div class="doctor-img">
+{% if result_user.user_profile.proPic %}
+<a class="nav-link" href="#"><img src="/media/{{result_user.user_profile.proPic}}" width="150px" height="150px" class="rounded-circle"> </a>
+{% else %}
+<a  href="#"><img src="/media/avater.png" width="150px" height="150px" class="rounded-circle"></a>
+{% endif %}
+</div>
+<div class="doc-info-cont">
+<h4 class="doc-name">@Dr.{{result_user.username}}</h4>
+<h4>{{result_user.first_name}} {{result_user.last_name}}</h4>
+<p>BM&DC Regi: {{result_user.doctor_info.BmdcRegiNo}} &nbsp|&nbsp type: {{result_user.doctor_info.reg_type}}</p>
+<p>Gender: {{result_user.doctor_info.Gender}}</p>
+<div class="patient-details">
+<h4 class="mb-0">{{result_user.doctor_info.Degree}}</h4>
+</div>
+<br>
+
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="d-inline-block average-rating">(35)</span>
+</div>
+<div class="clinic-details">
+<p class="doc-location"><i class="fas fa-map-marker-alt"></i> Newyork, USA - <a href="javascript:void(0);">Get Directions</a></p>
+
+</div>
+<div class="clinic-services">
+<span>{{result_user.doctor_info.services}}</span>
+
+</div>
+</div>
+</div>
+<div class="doc-info-right">
+<div class="clini-infos">
+<ul>
+<li><i class="far fa-comment"></i> {{ result_user.review_receiver.count}} Reviews</h6></li>
+<li><i class="fas fa-map-marker-alt"></i> {{result_user.doctor_info.work_location}}</li>
+<li><i class="fas fa-phone"></i> {{result_user.doctor_info.phone_no}} </li>
+</ul>
+</div>
+<div class="doctor-action">
+<a href="javascript:void(0)" class="btn btn-white fav-btn">
+<i class="far fa-bookmark"></i>
+</a>
+<a href="#" class="btn btn-white msg-btn">
+<i class="far fa-comment-alt"></i>
+</a>
+<a href="javascript:void(0)" class="btn btn-white call-btn" data-bs-toggle="modal" data-bs-target="#voice_call">
+<i class="fas fa-phone"></i>
+</a>
+<a href="javascript:void(0)" class="btn btn-white call-btn" data-bs-toggle="modal" data-bs-target="#video_call">
+<i class="fas fa-video"></i>
+</a>
+</div>
+<div class="clinic-booking">
+<a class="apt-btn" href="https:{{result_user.doctor_info.website}}">View Web Site</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="card">
+<div class="card-body pt-0">
+
+<nav class="user-tabs mb-4">
+<ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+<li class="nav-item">
+<a class="nav-link active" href="#doc_overview" data-bs-toggle="tab">Overview</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="#doc_locations" data-bs-toggle="tab">Locations</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="#doc_reviews" data-bs-toggle="tab">Reviews</a>
+</li>
+</ul>
+</nav>
+
+
+<div class="tab-content pt-0">
+
+<div role="tabpanel" id="doc_overview" class="tab-pane fade show active">
+<div class="row">
+<div class="col-md-12 col-lg-9">
+
+<div class="widget about-widget">
+<h4 class="widget-title">About Me</h4>
+<p>{{result_user.doctor_info.bio}}</p>
+</div>
+
+
+<div class="widget education-widget">
+<h4 class="widget-title">Education</h4>
+<div class="experience-box">
+<ul class="experience-list">
+<li>
+<div class="experience-user">
+<div class="before-circle"></div>
+</div>
+<div class="experience-content">
+<div class="timeline-content">
+<a href="#/" class="name">American Dental Medical University</a>
+<div>BDS</div>
+<span class="time">1998 - 2003</span>
+</div>
+</div>
+</li>
+<li>
+<div class="experience-user">
+<div class="before-circle"></div>
+</div>
+<div class="experience-content">
+<div class="timeline-content">
+<a href="#/" class="name">American Dental Medical University</a>
+<div>MDS</div>
+<span class="time">2003 - 2005</span>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div class="widget experience-widget">
+<h4 class="widget-title">Work & Experience</h4>
+<div class="experience-box">
+<ul class="experience-list">
+<li>
+<div class="experience-user">
+<div class="before-circle"></div>
+</div>
+<div class="experience-content">
+<div class="timeline-content">
+<a href="#/" class="name">Glowing Smiles Family Dental Clinic</a>
+<span class="time">2010 - Present (5 years)</span>
+ </div>
+</div>
+</li>
+<li>
+<div class="experience-user">
+<div class="before-circle"></div>
+</div>
+<div class="experience-content">
+<div class="timeline-content">
+<a href="#/" class="name">Comfort Care Dental Clinic</a>
+<span class="time">2007 - 2010 (3 years)</span>
+</div>
+</div>
+</li>
+<li>
+<div class="experience-user">
+<div class="before-circle"></div>
+</div>
+<div class="experience-content">
+<div class="timeline-content">
+<a href="#/" class="name">Dream Smile Dental Practice</a>
+<span class="time">2005 - 2007 (2 years)</span>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div class="widget awards-widget">
+<h4 class="widget-title">Awards</h4>
+<div class="experience-box">
+<ul class="experience-list">
+<li>
+<div class="experience-user">
+<div class="before-circle"></div>
+</div>
+<div class="experience-content">
+<div class="timeline-content">
+<p class="exp-year">July 2019</p>
+<h4 class="exp-title">Humanitarian Award</h4>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+</div>
+</div>
+</li>
+<li>
+<div class="experience-user">
+<div class="before-circle"></div>
+</div>
+<div class="experience-content">
+<div class="timeline-content">
+<p class="exp-year">March 2011</p>
+<h4 class="exp-title">Certificate for International Volunteer Service</h4>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+</div>
+</div>
+</li>
+<li>
+<div class="experience-user">
+<div class="before-circle"></div>
+</div>
+<div class="experience-content">
+<div class="timeline-content">
+<p class="exp-year">May 2008</p>
+<h4 class="exp-title">The Dental Professional of The Year Award</h4>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div class="service-list">
+<h4>Services</h4>
+<ul class="clearfix">
+<li>Tooth cleaning </li>
+<li>Root Canal Therapy</li>
+<li>Implants</li>
+<li>Composite Bonding</li>
+<li>Fissure Sealants</li>
+<li>Surgical Extractions</li>
+</ul>
+</div>
+
+
+<div class="service-list">
+<h4>Specializations</h4>
+<ul class="clearfix">
+<li>Children Care</li>
+<li>Dental Care</li>
+<li>Oral and Maxillofacial Surgery </li>
+<li>Orthodontist</li>
+<li>Periodontist</li>
+<li>Prosthodontics</li>
+</ul>
+ </div>
+
+</div>
+</div>
+</div>
+
+
+<div role="tabpanel" id="doc_locations" class="tab-pane fade">
+
+<div class="location-list">
+<div class="row">
+
+<div class="col-md-6">
+<div class="clinic-content">
+<h4 class="clinic-name"><a href="#">Smile Cute Dental Care Center</a></h4>
+<p class="doc-speciality">MDS - Periodontology and Oral Implantology, BDS</p>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="d-inline-block average-rating">(4)</span>
+</div>
+<div class="clinic-details mb-0">
+<h5 class="clinic-direction"> <i class="fas fa-map-marker-alt"></i> 2286 Sundown Lane, Austin, Texas 78749, USA <br><a href="javascript:void(0);">Get Directions</a></h5>
+<ul>
+<li>
+<a href="assets/img/features/feature-01.jpg" data-fancybox="gallery2">
+<img src="assets/img/features/feature-01.jpg" alt="Feature Image">
+</a>
+</li>
+<li>
+<a href="assets/img/features/feature-02.jpg" data-fancybox="gallery2">
+<img src="assets/img/features/feature-02.jpg" alt="Feature Image">
+</a>
+</li>
+<li>
+<a href="assets/img/features/feature-03.jpg" data-fancybox="gallery2">
+<img src="assets/img/features/feature-03.jpg" alt="Feature Image">
+</a>
+</li>
+<li>
+<a href="assets/img/features/feature-04.jpg" data-fancybox="gallery2">
+<img src="assets/img/features/feature-04.jpg" alt="Feature Image">
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div class="col-md-4">
+<div class="clinic-timing">
+<div>
+<p class="timings-days">
+<span> Mon - Sat </span>
+</p>
+<p class="timings-times">
+<span>10:00 AM - 2:00 PM</span>
+<span>4:00 PM - 9:00 PM</span>
+</p>
+</div>
+<div>
+<p class="timings-days">
+<span>Sun</span>
+</p>
+<p class="timings-times">
+<span>10:00 AM - 2:00 PM</span>
+</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-2">
+<div class="consult-price">
+$250
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="location-list">
+<div class="row">
+
+<div class="col-md-6">
+<div class="clinic-content">
+<h4 class="clinic-name"><a href="#">The Family Dentistry Clinic</a></h4>
+<p class="doc-speciality">MDS - Periodontology and Oral Implantology, BDS</p>
+<div class="rating">
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star"></i>
+<span class="d-inline-block average-rating">(4)</span>
+</div>
+<div class="clinic-details mb-0">
+<p class="clinic-direction"> <i class="fas fa-map-marker-alt"></i> 2883 University Street, Seattle, Texas Washington, 98155 <br><a href="javascript:void(0);">Get Directions</a></p>
+<ul>
+<li>
+<a href="assets/img/features/feature-01.jpg" data-fancybox="gallery2">
+<img src="assets/img/features/feature-01.jpg" alt="Feature Image">
+</a>
+</li>
+<li>
+<a href="assets/img/features/feature-02.jpg" data-fancybox="gallery2">
+<img src="assets/img/features/feature-02.jpg" alt="Feature Image">
+</a>
+</li>
+<li>
+<a href="assets/img/features/feature-03.jpg" data-fancybox="gallery2">
+<img src="assets/img/features/feature-03.jpg" alt="Feature Image">
+</a>
+</li>
+<li>
+<a href="assets/img/features/feature-04.jpg" data-fancybox="gallery2">
+<img src="assets/img/features/feature-04.jpg" alt="Feature Image">
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div class="col-md-4">
+<div class="clinic-timing">
+<div>
+<p class="timings-days">
+<span> Tue - Fri </span>
+</p>
+<p class="timings-times">
+<span>11:00 AM - 1:00 PM</span>
+<span>6:00 PM - 11:00 PM</span>
+</p>
+</div>
+<div>
+<p class="timings-days">
+<span>Sat - Sun</span>
+</p>
+<p class="timings-times">
+<span>8:00 AM - 10:00 AM</span>
+<span>3:00 PM - 7:00 PM</span>
+</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-2">
+<div class="consult-price">
+$350
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div role="tabpanel" id="doc_reviews" class="tab-pane fade">
+<div class="widget review-listing">
+<ul class="comments-list">
+{% for revi in result_user.review_receiver.all %}
+<li>
+<div class="comment">
+    {% if revi.giver.user_profile.proPic %}
+    <a class="nav-link" href="#"><img src="/media/{{revi.giver.user_profile.proPic}}" width="50px" height="50px" class="rounded-circle"> </a>
+    {% else %}
+    <a  href="#"><img src="/media/avater.png" width="50px" height="50px" class="rounded-circle"></a>
+    {% endif %}
+<div class="comment-body">
+<div class="meta-data">
+<span class="comment-author">{{revi.giver}}</span>
+<span class="comment-date">{{revi.review_date}}</span>
+
+</div>
+
+<p class="comment-content">
+{{revi.review}}
+</p>
+</div>
+</div>
+
+</li>
+{% endfor %}
+</ul>
+
+
+<div class="all-feedback text-center">
+<a href="#" class="btn btn-primary btn-sm">
+Show all feedback <strong>(167)</strong>
+</a>
+</div>
+
+</div>
+
+
+<div class="write-review">
+<h4>Write a review for <strong>{{result_user.first_name}} <strong> {{result_user.last_name}}</strong></h4>
+
+<form method="POST">
+<div class="form-group">
+    {{review_form|crispy}}
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary submit-btn">Add Review</button>
+    
+</div>
+</form>
+</div>
+</div>
+
+
+
+
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+
+{% endblock %}
