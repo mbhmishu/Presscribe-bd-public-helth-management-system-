@@ -91,7 +91,7 @@
 <div class="doc-info-left">
 
 <div class="doctor-img">
-<a href="{% url 'Accountapp:view_profile' username=result.username %}">
+<a href="{% url 'Accountapp:view_all_profile' username=result.username %}">
 {% if result.user_profile.proPic %}
 <img src="/media/{{result.user_profile.proPic}}" width="60px" height="60px" > 
 {% else %}
@@ -120,7 +120,7 @@
 
 </div>
 <div class="clinic-booking">
-<a class="view-pro-btn" href="{% url 'Accountapp:view_profile' username=result.username %}">View Profile</a>
+<a class="view-pro-btn" href="{% url 'Accountapp:view_all_profile' username=result.username %}">View Profile</a>
 
 </div>
 </div>
@@ -136,7 +136,7 @@
 <div class="doc-info-left">
 
 <div class="doctor-img">
-<a href="{% url 'Accountapp:view_profile' username=user_list.username %}">
+<a href="{% url 'Accountapp:view_all_profile' username=user_list.username %}">
 {% if user_list.user_profile.proPic %}
 <img src="/media/{{user_list.user_profile.proPic}}" width="60px" height="60px" > 
 {% else %}
@@ -165,7 +165,7 @@
 
 </div>
 <div class="clinic-booking">
-<a class="view-pro-btn" href="{% url 'Accountapp:view_profile' username=user_list.username %}">View Profile</a>
+<a class="view-pro-btn" href="{% url 'Accountapp:view_all_profile' username=user_list.username %}">View Profile</a>
 
 </div>
 </div>

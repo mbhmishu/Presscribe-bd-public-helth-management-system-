@@ -47,24 +47,24 @@
 <li>
     {% if user.user_profile.proPic %}
     <a href="{% url 'Accountapp:ProPicChange' %}">
-    <i class="fas fa-bookmark"></i>
+    <i class="fas fa-user-injured"></i>
     <span>Change Profile picture</span>
     </a>
     {% else %}
     <a href="{% url 'Accountapp:AddProPic' %}">
-    <i class="fas fa-bookmark"></i>
+    <i class="fas fa-user-injured"></i>
     <span>Upload Profile picture</span>
     </a>
     {% endif %}
 </li>
 <li>
-<a href="#">
-<i class="fas fa-user-injured"></i>
-<span>My Patients</span>
+<a href="{% url 'blog_app:my_blog' %}">
+<i class="fas fa-bookmark"></i>
+<span>My Blogs</span>
 </a>
 </li>
 <li>
-<a href="#">
+<a href="">
 <i class="fas fa-hourglass-start"></i>
 <span>Schedule Timings</span>
 </a>
@@ -76,9 +76,9 @@
 </a>
 </li>
 <li>
-<a href="#">
+<a href="{% url 'blog_app:CreateBlog' %}">
 <i class="fas fa-file-invoice"></i>
-<span>Invoices</span>
+<span>Create blogs</span>
 </a>
 </li>
 <li>

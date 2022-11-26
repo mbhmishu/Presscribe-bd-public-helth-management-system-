@@ -52,11 +52,16 @@
 <ul class="main-nav black-font">
 <li class="has-submenu menu-effect active"> <a href="#">Home <i class="fas fa-chevron-down"></i></a>
 <ul class="submenu">
-<li><a href="#">user profile</a></li>
-<li><a href="#">Home 2</a></li>
+{% if user.is_authenticated%}
+<li><a href="{% url 'Accountapp:view_all_profile' username=user.username %}">My Dashboard</a></li>
+<li><a href="{% url 'Accountapp:search' %}">Search page</a></li>
+<li> <a href="{% url 'Accountapp:sign_out' %}">Logout</a>
+{% endif %}
 </ul>
 </li>
-<li> <a href="#" target="_blank">Admin</a>
+<li> <a href="{% url 'blog_app:blog_list'%}">Blogs</a>
+</li>
+
 </li>
 </ul>
 </div>

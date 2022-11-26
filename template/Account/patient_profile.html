@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 {% extends 'Profile/base.html' %}
-{% load crispy_forms_tags %}
-
 {% load static %}
 
 
@@ -60,39 +58,7 @@
 <img src="{% static '' %}assets/img2/prescription.jpg" alt="" width="40%">
 </div>
 <h5></h5>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-    Add Prescription
-  </button>
-  <!-- The Modal -->
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-  
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Prescription for @{{result_user.username}}</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body">
-          <form method="POST" enctype="multipart/form-data">
-            {{PresForm|crispy}}
-            {% csrf_token %}
-            <br>
-            <button type="submit" class="btn btn-sm btn-primary">submit<button>
-                  
-          </form>
-        </div>
-  
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</button>
-        </div>
-  
-      </div>
-    </div>
-  </div>
+<a href="{% url 'prescrib:Add_to_patientprofile' username=result_user.username %}" class="btn-five btn-fifteen btn-sm">Add Prescriptions</a> 
 </div>
 </div>
 </div>
@@ -103,82 +69,7 @@
 <div class="mb-3">
 <img src="{% static '' %}assets/img2/lab.jpg" alt="" width="40%">
 </div>
-<h5></h5>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-    Add test result
-  </button>
-  <!-- The Modal -->
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-  
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Add test result for @{{result_user.username}}</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body">
-          <form method="POST" enctype="multipart/form-data">
-            {{TReportForm|crispy}}
-            {% csrf_token %}
-            <br>
-            <button type="submit" class="btn btn-sm btn-primary">submit<button>
-                  
-          </form>
-        </div>
-  
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</button>
-        </div>
-  
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-</div>
-<div class="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
-<div class="card">
-<div class="card-body text-center">
-<div class="mb-3">
-<img src="{% static '' %}assets/img2/record1.png" alt="" width="55">
-</div>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-    Add test result
-  </button>
-  <!-- The Modal -->
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-  
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Add test result for @{{result_user.username}}</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body">
-          <form method="POST" enctype="multipart/form-data">
-            {{TReportForm|crispy}}
-            {% csrf_token %}
-            <br>
-            <button type="submit" class="btn btn-sm btn-primary">submit<button>
-                  
-          </form>
-        </div>
-  
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</button>
-        </div>
-  
-      </div>
-    </div>
-  </div>
+<a href="{% url 'prescrib:Add_to_patientprofile' username=result_user.username %}" class="btn-five btn-fifteen btn-sm">Add Test report</a> 
 
 </div>
 </div>
@@ -187,42 +78,21 @@
 <div class="card">
 <div class="card-body text-center">
 <div class="mb-3">
-<img src="{% static '' %}assets/img2/login-banner-01.png" alt="" width="55">
+<img src="{% static '' %}assets/img2/record1.png" alt="" width="75">
+</div>
+<a href="{% url 'prescrib:Add_to_patientprofile' username=result_user.username %}" class="btn-five btn-fifteen btn-sm">Add medical records</a> 
+
+</div>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
+<div class="card">
+<div class="card-body text-center">
+<div class="mb-3">
+<img src="{% static '' %}assets/img2/login-banner-01.png" alt="" width="75">
 </div>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-    Add medical Records
-  </button>
-  <!-- The Modal -->
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-  
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Create Medical record for @{{result_user.username}}</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body">
-          <form method="POST" enctype="multipart/form-data">
-            {{MrecordForm|crispy}}
-            {% csrf_token %}
-            <br>
-            <button type="submit" class="btn btn-sm btn-primary">Post<button>
-                  
-          </form>
-        </div>
-  
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</button>
-        </div>
-  
-      </div>
-    </div>
-  </div>
+<a href="{% url 'prescrib:Add_to_patientprofile' username=result_user.username %}" class="btn-five btn-fifteen btn-sm">Add medicine Billing</a> 
 
 
 </div>

@@ -61,9 +61,10 @@
 
 </div>
 </div>
-<a class="dropdown-item" href="doctor-dashboard.html">Dashboard</a>
+<a class="dropdown-item" href="{% url 'Accountapp:view_all_profile' username=user.username %}">My Dashboard</a>
 <a class="dropdown-item" href="{% url 'Accountapp:search' %}">Search page</a>
 <a class="dropdown-item" href="{% url 'Accountapp:index' %}">Home page</a>
+<a class="dropdown-item" href="{% url 'blog_app:blog_list' %}">Blogs</a>
 <a class="dropdown-item" href="{% url 'Accountapp:sign_out' %}">Logout</a>
 </div>
 </li>
