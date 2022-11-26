@@ -25,7 +25,7 @@ class Doc_RegisForm(UserCreationForm):
     password1 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'password'}),label='')
     password2 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Confirm password'}),label='')
     email = forms.EmailField(required=True,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'@Email'}),label='')
-    is_doctor = forms.BooleanField(required=True , label='Im a patient')
+    is_doctor = forms.BooleanField(required=True , label='Im a Doctor')
     class Meta:
         model = User
         fields = ('username','first_name','last_name', 'password1', 'password2', 'email','is_doctor')
@@ -38,7 +38,7 @@ class Lab_RegisForm(UserCreationForm):
     password1 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'password'}),label='')
     password2 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Confirm password'}),label='')
     email = forms.EmailField(required=True,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'@Email'}),label='')
-    is_labratory = forms.BooleanField(required=True , label='Im a patient')
+    is_labratory = forms.BooleanField(required=True , label='Im a Labrotory')
 
     class Meta:
         model = User
@@ -52,7 +52,7 @@ class Phar_RegisForm(UserCreationForm):
     password1 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'password'}),label='')
     password2 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Confirm password'}),label='')
     email = forms.EmailField(required=True,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'@Email'}),label='')
-    is_pharmacy = forms.BooleanField(required=True , label='Im a patient')
+    is_pharmacy = forms.BooleanField(required=True , label='Im a Pharmacy')
 
     class Meta:
         model = User
@@ -66,7 +66,7 @@ class Hospi_RegisForm(UserCreationForm):
     password1 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'password'}),label='')
     password2 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Confirm password'}),label='')
     email = forms.EmailField(required=True,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'@Email'}),label='')
-    is_hospital = forms.BooleanField(required=True , label='Im a patient')
+    is_hospital = forms.BooleanField(required=True , label='Im a Hospital')
     
     class Meta:
         model = User
@@ -80,7 +80,7 @@ class PharFirm_RegisForm(UserCreationForm):
     password1 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'password'}),label='')
     password2 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Confirm password'}),label='')
     email = forms.EmailField(required=True,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'@Email'}),label='')
-    is_pharmacuticalfarm = forms.BooleanField(required=True , label='Im a patient')
+    is_pharmacuticalfarm = forms.BooleanField(required=True , label='Im a Pharmacutical pharm')
 
     class Meta:
         model = User
@@ -94,7 +94,7 @@ class Govt_RegisForm(UserCreationForm):
     password1 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'password'}),label='')
     password2 = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Confirm password'}),label='')
     email = forms.EmailField(required=True,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'@Email'}),label='')
-    is_Govt = forms.BooleanField(required=True , label='Im a patient')
+    is_Govt = forms.BooleanField(required=True , label='Im a Govt Employee')
 
     class Meta:
         model = User

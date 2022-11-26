@@ -25,9 +25,9 @@ class User(AbstractUser):
 
 
 
-class Follow(models.Model):
-    follower = models.ForeignKey(User, on_delete=models.CASCADE ,related_name='followers')
-    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
+class Verify(models.Model):
+    toverify = models.ForeignKey(User, on_delete=models.CASCADE ,related_name='to_verify')
+    expecting = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expecting_ac')
     date = models.DateTimeField(auto_now_add=True)
 
 

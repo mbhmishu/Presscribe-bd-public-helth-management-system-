@@ -6,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm,  UserChangeForm, Passw
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.generic import View, TemplateView, CreateView, UpdateView, DeleteView, ListView, DetailView
+from blogapp.models import Follow
 
 
 from prescribeapp.forms import ReviewForm
@@ -162,6 +163,7 @@ def notfound(request):
 @login_required
 def doc_profile(request, username):
     result_user = User.objects.get(username=username)
+    alrady_follow = Follow.objects.filter(follower=request.user,following=result_user)
     reviews = Review.objects.filter(receiver__username=username)
     review_form = ReviewForm()
     if request.method == "POST":
@@ -172,7 +174,7 @@ def doc_profile(request, username):
             review.receiver = result_user
             review.save()
             return HttpResponseRedirect(reverse('Accountapp:doc_profile' , kwargs={'username':username}))
-    return render(request, 'Profile/doctor_profile.html', context={'result_user':result_user, 'review_form':review_form})       
+    return render(request, 'Profile/doctor_profile.html', context={'result_user':result_user, 'review_form':review_form,'alrady_follow':alrady_follow})       
     
     
 
@@ -379,15 +381,14 @@ def ChangeUser(request):
 @login_required
 def AddProPic(request):
     current_user = request.user
-    ap_msg = False
     form = UserProPicForm()
-    if request.method == 'POST':
-        form = UserProPicForm(request.POST, request.FILES)
+    if request.method=='POST':
+        form=UserProPicForm(request.POST, request.FILES)
         if form.is_valid():
-            user_obj  = form.save(commit=False)
-            user_obj.user = request.user
+            user_obj=form.save(commit=False)
+            user_obj.user=request.user
             user_obj.save()
-            ap_msg = True
+            
             if current_user.is_doctor:
                 return HttpResponseRedirect(reverse('Accountapp:doc_dashboard'))
             elif current_user.is_patient:
