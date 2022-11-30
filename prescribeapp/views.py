@@ -11,36 +11,10 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def patient_profile(request, username):
     result_user = User.objects.get(username=username)
-    PresForm =PrescriptionForm()
-    if request.method == "POST":
-        PresForm = PrescriptionForm(request.POST, request.FILES)
-        if PresForm.is_valid():
-            prescrip = PresForm.save(commit=False)
-            prescrip.doctor = request.user
-            prescrip.patient = result_user
-            prescrip.save()
-            return HttpResponseRedirect(reverse('prescrib:patient_profile'))
-     
-    MrecordForm =MedicaleRocordForm()
-    if request.method == "POST":
-        MrecordForm = MedicaleRocordForm(request.POST, request.FILES)
-        if MrecordForm.is_valid():
-            Mrecord = PresForm.save(commit=False)
-            Mrecord.hospital = request.user
-            Mrecord.patient = result_user
-            Mrecord.save()
-            return HttpResponseRedirect(reverse('prescrib:patient_profile'))
-
-    TReportForm =MedicalTestReportForm()
-    if request.method == "POST":
-        TReportForm = MedicalTestReportForm(request.POST, request.FILES)
-        if TReportForm.is_valid():
-            TReport = PresForm.save(commit=False)
-            TReport.lab = request.user
-            TReport.patient = result_user
-            TReport.save()
-            return HttpResponseRedirect(reverse('prescrib:patient_profile'))
-    return render(request, 'Account/patient_profile.html', context={'result_user':result_user, 'PresForm':PresForm,'MrecordForm':MrecordForm,'TReportForm':TReportForm})
+    prescription_list = Prescription.objects.filter(patient=result_user)
+    medicaleRocord_list = MedicaleRocord.objects.filter(patient=result_user)
+    testReport_list = MedicalTestReport.objects.filter(patient=result_user)
+    return render(request, 'Account/patient_profile.html', context={'result_user':result_user, 'prescription_list':prescription_list,'medicaleRocord_list':medicaleRocord_list,'testReport_list':testReport_list})
 
 @login_required
 def Add_to_patientprofile(request, username):
@@ -55,7 +29,7 @@ def Add_to_patientprofile(request, username):
                 prescrip.doctor = request.user
                 prescrip.patient = result_user
                 prescrip.save()
-                return HttpResponseRedirect(reverse('prescrib:patient_profile'))
+                return HttpResponseRedirect(reverse('prescrib:patient_profile', kwargs={'username':username}))
     if request.user.is_hospital:
         text= 'Provide Medical Record'    
         Form=MedicaleRocordForm()
@@ -66,7 +40,7 @@ def Add_to_patientprofile(request, username):
                 Mrecord.hospital = request.user
                 Mrecord.patient = result_user
                 Mrecord.save()
-                return HttpResponseRedirect(reverse('prescrib:patient_profile'))
+                return HttpResponseRedirect(reverse('prescrib:patient_profile', kwargs={'username':username}))
     if request.user.is_labratory:
         text= 'Provide Test result'
         Form=MedicalTestReportForm()
@@ -78,9 +52,20 @@ def Add_to_patientprofile(request, username):
                 TReport.patient = result_user
                 TReport.save()
                 return HttpResponseRedirect(reverse('prescrib:patient_profile', kwargs={'username':username} ))
+    
     return render(request, 'Add_to_patientprofile.htm', context={'result_user':result_user, 'Form':Form, 'text':text})
 
 
 
 
+@login_required
+def patient_records(request,username):
+    
+    prescription_list = Prescription.objects.filter(patient__username=username)
+    medicaleRocord_list = MedicaleRocord.objects.filter(patient__username=username)
+    testReport_list = MedicalTestReport.objects.filter(patient__username=username)
+
+    return render(request, 'Account/patient_profile.html', context={'prescription_list':prescription_list, 'medicaleRocord_list':medicaleRocord_list,'testReport_list':testReport_list })
+
+    
 

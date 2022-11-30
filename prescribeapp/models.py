@@ -6,6 +6,7 @@ from AccountApp.models import User, DoctorInfo,PatientInfo
 class Prescription(models.Model):
     doctor=models.ForeignKey(User, related_name='prescribe_giver', on_delete=models.CASCADE)
     patient=models.ForeignKey(User, related_name='prescribe_receiver', on_delete=models.CASCADE)
+    purpose=models.CharField(max_length=150,verbose_name='Purpose', blank=True, null=True)
     test=models.TextField( verbose_name='Advice medical test...', blank=True, null=True )
     disease=models.TextField( verbose_name='Patient disease...', blank=True, null=True )
     prescrb=models.TextField(verbose_name='Prescribe medicine...', blank=True, null=True )
@@ -17,7 +18,7 @@ class Prescription(models.Model):
         ordering = ('-creat_date',)
 
     def __str__(self):
-        return self.disease
+        return self.creat_date
 
 
 class Review(models.Model):
@@ -51,6 +52,7 @@ class Permission(models.Model):
 class MedicaleRocord(models.Model):
     hospital=models.ForeignKey(User, related_name='m_record_giver', on_delete=models.CASCADE)
     patient=models.ForeignKey(User, related_name='m_record_receiver', on_delete=models.CASCADE)
+    purpose=models.CharField(max_length=150,verbose_name='Purpose', blank=True, null=True)
     title = models.CharField(max_length=264,verbose_name='Record title ', blank=True, null=True)
     record=models.TextField(verbose_name='Medical record......', blank=True, null=True )
     Advice = models.TextField(verbose_name='Advice', blank=True, null=True)
@@ -68,6 +70,7 @@ class MedicaleRocord(models.Model):
 class MedicalTestReport(models.Model):
     lab=models.ForeignKey(User, related_name='m_report_giver', on_delete=models.CASCADE)
     patient=models.ForeignKey(User, related_name='m_report_receiver', on_delete=models.CASCADE)
+    prescription=models.ForeignKey(Prescription, related_name='prescription_test', on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=264,verbose_name='Report title ', blank=True, null=True)
     doctor=models.CharField( max_length=24,verbose_name='Dr. username', blank=True, null=True )
     report=models.TextField(verbose_name='Medical report......', blank=True, null=True )
