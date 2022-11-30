@@ -139,9 +139,9 @@ class PharInfoEdForm(forms.ModelForm):
         exclude = ('user',)
 
 class ORG_InfoEdForm(forms.ModelForm):
-    date_of_birth = forms.DateField(label='Date of birth',widget=forms.TextInput(attrs={'type':'date',}))
+    last_updated_regi = forms.DateField(label='Date of birth',widget=forms.TextInput(attrs={'type':'date',}))
     class Meta:
-        model = PatientInfo
+        model = OrgInfo
         exclude = ('user',)
 
 class GovEmpEdForm(forms.ModelForm):

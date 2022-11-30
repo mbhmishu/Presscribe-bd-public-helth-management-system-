@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 app_name = 'Accountapp'
 
 urlpatterns = [
-    path('signin/', views.sign_in, name='sign_in'),
+    path('sign_in/', views.sign_in, name='sign_in'),
     path('sign_out/', views.sign_out, name='sign_out'),
     path('', views.index, name='index'),
     path('regi_type/', views.regi_type, name='regi_type'),
@@ -36,7 +36,6 @@ urlpatterns = [
     path('AddProPic/', views.AddProPic, name='AddProPic'),
     path('ProPicChange/', views.ProPicChange, name='ProPicChange'),
     path('view_all_profile/<username>/', views.view_all_profile, name='view_all_profile'),
-    path('patient_dtl_viw/<username>/', views.patient_dtl_viw, name='patient_dtl_viw'),
     path('ORG_details/<username>/', views.ORG_details, name='ORG_details'),
      path('notfound',views.notfound, name='notfound'),
     

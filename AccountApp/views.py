@@ -8,9 +8,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import View, TemplateView, CreateView, UpdateView, DeleteView, ListView, DetailView
 from blogapp.models import Follow
 
-
 from prescribeapp.forms import ReviewForm
 from prescribeapp.models import Likes,Review
+from managment_app.models import Verify
 
 
 
@@ -216,7 +216,31 @@ def ORG_dashboard(request):
 
 @login_required
 def gov_dashbord(request):
-    return render(request, 'Profile/gov_dashbord.html', context={})  
+    user_list=User.objects.all().count()
+
+    doctor_list=DoctorInfo.objects.all().count()
+    verified_doctor=DoctorInfo.objects.filter(user__expecting_ac=True).count()
+    unverified_doctor=DoctorInfo.objects.exclude(user__expecting_ac=True)
+    
+    phar_list = PharInfo.objects.all().count()
+    verified_phar=PharInfo.objects.filter(user__expecting_ac=True).count()
+    unverified_phar=PharInfo.objects.exclude(user__expecting_ac=True).count()
+    
+    hospital_list = OrgInfo.objects.filter(user__is_hospital=True).count()
+    verified_hospital=OrgInfo.objects.filter(user__expecting_ac=True).filter(user__is_labratory=True).count()
+    unverified_hospital=OrgInfo.objects.exclude(user__expecting_ac=True).filter(user__is_labratory=True).count()
+
+    patient_List = PatientInfo.objects.all().count()
+    
+    lab_list = OrgInfo.objects.filter(user__is_labratory=True).count()
+    verified_lab=OrgInfo.objects.filter(user__expecting_ac=True).filter(user__is_labratory=True).count()
+    unverified_lab=OrgInfo.objects.exclude(user__expecting_ac=True).filter(user__is_labratory=True).count()
+
+    pharmacuticalfarm_list = OrgInfo.objects.filter(user__is_pharmacuticalfarm=True).count()
+    verified_phfarm=OrgInfo.objects.filter(user__expecting_ac=True).filter(user__is_pharmacuticalfarm=True).count()
+    unverified_phfarm=OrgInfo.objects.exclude(user__expecting_ac=True).filter(user__is_pharmacuticalfarm=True).count()
+
+    return render(request, 'Profile/gov_dashbord.html', context={'unverified_doctor':unverified_doctor,'verified_doctor':verified_doctor,'user_list':user_list,'doctor_list':doctor_list,'patient_List':patient_List,'phar_list':phar_list,'hospital_list':hospital_list,'lab_list':lab_list,'pharmacuticalfarm_list':pharmacuticalfarm_list,'verified_phar':verified_phar,'unverified_phar':unverified_phar,'verified_hospital':verified_hospital,'unverified_hospital':unverified_hospital,'verified_lab':verified_lab, 'unverified_lab':unverified_lab})  
 
 
 @login_required
@@ -251,6 +275,8 @@ def view_all_profile(request, username):
             return HttpResponseRedirect(reverse('Accountapp:doc_dashboard'))
         return HttpResponseRedirect(reverse('Accountapp:doc_profile' , kwargs={'username':username}))
     elif result_user.is_pharmacy or result_user.is_labratory or result_user.is_hospital or result_user.is_pharmacuticalfarm:
+        if result_user == request.user:
+            return HttpResponseRedirect(reverse('Accountapp:ORG_dashboard'))
         return HttpResponseRedirect(reverse('Accountapp:ORG_details' , kwargs={'username':username}))       
          
     return HttpResponseRedirect(reverse('Accountapp:notfound'))
@@ -258,12 +284,7 @@ def view_all_profile(request, username):
 
 
 
-@login_required
-def patient_dtl_viw(request, username):
-    result_user = PatientInfo.objects.get(username=username)
-    if result_user == request.user:
-        return HttpResponseRedirect(reverse('Accountapp:patient_dashboard'))
-    return render(request, 'Account/patient_profile.html', context={'result_user': result_user})  
+  
     
 
 

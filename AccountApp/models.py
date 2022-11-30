@@ -19,20 +19,6 @@ class User(AbstractUser):
 
 
 
-    
-    
-    
-
-
-
-class Verify(models.Model):
-    toverify = models.ForeignKey(User, on_delete=models.CASCADE ,related_name='to_verify')
-    expecting = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expecting_ac')
-    date = models.DateTimeField(auto_now_add=True)
-
-
-
-
 BloodGroup=(
 
     ('A+','A+'),
