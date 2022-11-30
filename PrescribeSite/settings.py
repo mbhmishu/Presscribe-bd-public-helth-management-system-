@@ -138,7 +138,7 @@ MEDIA_URL = 'media/'
 AUTH_USER_MODEL = 'AccountApp.User'
 
 
-LOGIN_URL = '/Accountapp/sign_in/'
+LOGIN_URL = '/sign_in/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
