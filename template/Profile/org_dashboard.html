@@ -102,7 +102,11 @@
 </a>
 </li>
 <li>
+{% if user.is_pharmacy %}
 <a href="{% url 'Accountapp:pharmacy_edit_pro' %}">
+{% else %}
+<a href="{% url 'Accountapp:ORG_edit_pro' %}">
+{% endif %}
 <i class="fas fa-user-cog"></i>
 <span>Profile Settings</span>
 </a>

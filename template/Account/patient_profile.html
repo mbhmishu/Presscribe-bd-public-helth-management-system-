@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% extends 'Profile/base.html' %}
+{% load custom_filters %}
 {% load static %}
 
 
@@ -57,8 +58,11 @@
 <div class="mb-3">
 <img src="{% static '' %}assets/img2/prescription.jpg" alt="" width="40%">
 </div>
-<h5></h5>
+{% if user.is_doctor %}
 <a href="{% url 'prescrib:Add_to_patientprofile' username=result_user.username %}" class="btn-five btn-fifteen btn-sm">Add Prescriptions</a> 
+{% else %}
+<h5><a href="{% url 'Accountapp:notfound'  %}" class="btn-five btn-fifteen btn-sm">Add Prescriptions</a></h5>
+{% endif %}
 </div>
 </div>
 </div>
@@ -69,8 +73,11 @@
 <div class="mb-3">
 <img src="{% static '' %}assets/img2/lab.jpg" alt="" width="40%">
 </div>
+{% if user.is_labratory%}
 <a href="{% url 'prescrib:Add_to_patientprofile' username=result_user.username %}" class="btn-five btn-fifteen btn-sm">Add Test report</a> 
-
+{% else %}
+<h5><a href="{% url 'Accountapp:notfound'  %}" class="btn-five btn-fifteen btn-sm">Add Test report</a></h5>
+{% endif %}
 </div>
 </div>
 </div>
@@ -80,8 +87,11 @@
 <div class="mb-3">
 <img src="{% static '' %}assets/img2/record1.png" alt="" width="75">
 </div>
+{% if user.is_hospital %}
 <a href="{% url 'prescrib:Add_to_patientprofile' username=result_user.username %}" class="btn-five btn-fifteen btn-sm">Add medical records</a> 
-
+{% else %}
+<h5><a href="{% url 'Accountapp:notfound'  %}" class="btn-five btn-fifteen btn-sm">Add medical records</a></h5>
+{% endif %}
 </div>
 </div>
 </div>
@@ -116,7 +126,7 @@
 <img src="{% static '' %}assets/img/shapes/graph-01.png" alt="">
 </div>
 <div class="graph-status-result mt-3">
-<span class="graph-update-date">Last Update 6d</span>
+<span class="graph-update-date">Drug avg</span>
 </div>
 </a>
 </div>
@@ -170,10 +180,10 @@
 <nav class="user-tabs mb-4">
 <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
 <li class="nav-item">
-<a class="nav-link active" href="#pat_appointments" data-bs-toggle="tab">List of diseases</a>
+<a class="nav-link active" href="#pat_appointments" data-bs-toggle="tab">List of Prescriptions</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="#pat_prescriptions" data-bs-toggle="tab">List of Prescriptions</a>
+<a class="nav-link" href="#pat_prescriptions" data-bs-toggle="tab">List of Test Report</a>
 </li>
 <li class="nav-item">
 <a class="nav-link" href="#pat_medical_records" data-bs-toggle="tab"><span class="med-records">Medical Records</span></a>
@@ -194,266 +204,51 @@
 <table class="table table-hover table-center mb-0">
 <thead>
 <tr>
-<th>Doctor</th>
 <th>Appt Date</th>
-<th>Booking Date</th>
-<th>Amount</th>
-<th>Follow Up</th>
-<th>Status</th>
+<th>purpose</th>
+<th>Disease</th>
+<th>Test</th>  
+<th>Doctor</th>
 <th></th>
 </tr>
 </thead>
 <tbody>
-<tr>
+{% for prescriptions in prescription_list %}
+<tr>    
+<td>{{prescriptions.creat_date|date}} <span class="d-block text-info">{{prescriptions.creat_date|time}}</span></td>
+<td>{{prescriptions.purpose}}</td> 
+<td>{{prescriptions.disease|linebreaks}}</td>
+<td>{{prescriptions.test|linebreaks}}</td>    
 <td>
 <h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-01.jpg" alt="User Image">
+<a href="#" class="avatar avatar-sm me-2">
+
+{% if prescriptions.doctor.user_profile.proPic %}
+<img src="/media/{{prescriptions.doctor.user_profile.proPic}}" > 
+{% else %}
+<img src="/media/avater.png" >
+{% endif %}
+
 </a>
-<a href="doctor-profile.html">Dr. Ruby Perrin <span>Dental</span></a>
+
+<a href="doctor-profile.html">{{prescriptions.doctor.first_name}} {{prescriptions.doctor.last_name}}<span>@Dr.{{prescriptions.doctor.username}}</span></a>
 </h2>
  </td>
-<td>14 Nov 2019 <span class="d-block text-info">10.00 AM</span></td>
-<td>12 Nov 2019</td>
-<td>$160</td>
-<td>16 Nov 2019</td>
-<td><span class="badge rounded-pill bg-success-light">Confirm</span></td>
+
+
 <td class="text-end">
 <div class="table-action">
 <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
 <i class="fas fa-print"></i> Print
 </a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+<a href="#" class="btn btn-sm bg-info-light">
 <i class="far fa-eye"></i> View
 </a>
 </div>
 </td>
 </tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Darren Elder <span>Dental</span></a>
-</h2>
-</td>
-<td>12 Nov 2019 <span class="d-block text-info">8.00 PM</span></td>
-<td>12 Nov 2019</td>
-<td>$250</td>
-<td>14 Nov 2019</td>
-<td><span class="badge rounded-pill bg-success-light">Confirm</span></td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-03.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Deborah Angel <span>Cardiology</span></a>
-</h2>
-</td>
-<td>11 Nov 2019 <span class="d-block text-info">11.00 AM</span></td>
-<td>10 Nov 2019</td>
-<td>$400</td>
-<td>13 Nov 2019</td>
-<td><span class="badge rounded-pill bg-danger-light">Cancelled</span></td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-04.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Sofia Brient <span>Urology</span></a>
-</h2>
-</td>
-<td>10 Nov 2019 <span class="d-block text-info">3.00 PM</span></td>
-<td>10 Nov 2019</td>
-<td>$350</td>
-<td>12 Nov 2019</td>
-<td><span class="badge rounded-pill bg-warning-light">Pending</span></td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-05.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Marvin Campbell <span>Ophthalmology</span></a>
-</h2>
-</td>
-<td>9 Nov 2019 <span class="d-block text-info">7.00 PM</span></td>
-<td>8 Nov 2019</td>
-<td>$75</td>
-<td>11 Nov 2019</td>
-<td><span class="badge rounded-pill bg-success-light">Confirm</span></td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-06.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Katharine Berthold <span>Orthopaedics</span></a>
-</h2>
-</td>
-<td>8 Nov 2019 <span class="d-block text-info">9.00 AM</span></td>
-<td>6 Nov 2019</td>
-<td>$175</td>
-<td>10 Nov 2019</td>
-<td><span class="badge rounded-pill bg-danger-light">Cancelled</span></td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-07.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Linda Tobin <span>Neurology</span></a>
-</h2>
-</td>
-<td>8 Nov 2019 <span class="d-block text-info">6.00 PM</span></td>
-<td>6 Nov 2019</td>
-<td>$450</td>
-<td>10 Nov 2019</td>
-<td><span class="badge rounded-pill bg-success-light">Confirm</span></td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div> 
-</td>
-</tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-08.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Paul Richard <span>Dermatology</span></a>
-</h2>
-</td>
-<td>7 Nov 2019 <span class="d-block text-info">9.00 PM</span></td>
-<td>7 Nov 2019</td>
-<td>$275</td>
-<td>9 Nov 2019</td>
-<td><span class="badge rounded-pill bg-success-light">Confirm</span></td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-09.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. John Gibbs <span>Dental</span></a>
-</h2>
-</td>
-<td>6 Nov 2019 <span class="d-block text-info">8.00 PM</span></td>
-<td>4 Nov 2019</td>
-<td>$600</td>
-<td>8 Nov 2019</td>
-<td><span class="badge rounded-pill bg-success-light">Confirm</span></td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-10.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Olga Barlow <span>Dental</span></a>
-</h2>
-</td>
-<td>5 Nov 2019 <span class="d-block text-info">5.00 PM</span></td>
-<td>1 Nov 2019</td>
-<td>$100</td>
-<td>7 Nov 2019</td>
-<td><span class="badge rounded-pill bg-success-light">Confirm</span></td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
+{% endfor %}
+
 </tbody>
 </table>
 </div>
@@ -470,21 +265,32 @@
 <thead>
 <tr>
 <th>Date </th>
-<th>Name</th>
+<th>Prescription</th>
+<th>purpose</th>
 <th>Created by </th>
 <th></th>
 </tr>
 </thead>
 <tbody>
+
+
+
+    
+{% for test_report in testReport_list %}
 <tr>
-<td>14 Nov 2019</td>
-<td>Prescription 1</td>
+<td>{{test_report.creat_date|date}} <span class="d-block text-info">{{test_report.creat_date|time}}</span></td>
+<td>{{test_report.prescription}}</td>
+<td>{{test_report.title}}</td>
 <td>
 <h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-01.jpg" alt="User Image">
+<a href="#" class="avatar avatar-sm me-2">
+{% if test_report.lab.user_profile.proPic %}
+<img src="/media/{{test_report.lab.user_profile.proPic}}" > 
+{% else %}
+<img src="/media/avater.png" >
+{% endif %}
 </a>
-<a href="doctor-profile.html">Dr. Ruby Perrin <span>Dental</span></a>
+<a href="#">{{test_report.lab.first_name}} {{test_report.lab.last_name}}<span>@{{test_report.lab.username}}</span></a>
 </h2>
 </td>
 <td class="text-end">
@@ -498,210 +304,16 @@
 </div>
 </td>
 </tr>
-<tr>
-<td>13 Nov 2019</td>
-<td>Prescription 2</td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Darren Elder <span>Dental</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>12 Nov 2019</td>
-<td>Prescription 3</td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-03.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Deborah Angel <span>Cardiology</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>11 Nov 2019</td>
-<td>Prescription 4</td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-04.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Sofia Brient <span>Urology</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>10 Nov 2019</td>
-<td>Prescription 5</td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-05.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Marvin Campbell <span>Dental</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>9 Nov 2019</td>
-<td>Prescription 6</td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-06.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Katharine Berthold <span>Orthopaedics</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>8 Nov 2019</td>
-<td>Prescription 7</td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-07.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Linda Tobin <span>Neurology</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>7 Nov 2019</td>
-<td>Prescription 8</td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-08.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Paul Richard <span>Dermatology</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>6 Nov 2019</td>
-<td>Prescription 9</td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-09.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. John Gibbs <span>Dental</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td>5 Nov 2019</td>
-<td>Prescription 10</td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-10.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Olga Barlow <span>Dental</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-</div>
-</td>
-</tr>
+{% endfor %}
+
 </tbody>
 </table>
 </div>
 </div>
 </div>
 </div>
+
+
 
 
 <div id="pat_medical_records" class="tab-pane fade">
@@ -711,26 +323,29 @@
 <table class="table table-hover table-center mb-0">
 <thead>
 <tr>
-<th>ID</th>
 <th>Date </th>
-<th>Description</th>
-<th>Attachment</th>
+<th>purpose</th>
+<th>Record Title</th>
 <th>Created</th>
 <th></th>
 </tr>
 </thead>
 <tbody>
+{% for medicaleRocords in medicaleRocord_list %}
 <tr>
-<td><a href="javascript:void(0);">#MR-0010</a></td>
-<td>14 Nov 2019</td>
-<td>Dental Filling</td>
-<td><a href="#">dental-test.pdf</a></td>
+<td>{{medicaleRocords.creat_date|date}} <span class="d-block text-info">{{medicaleRocords.creat_date|time}}</span></td>
+<td>{{medicaleRocords.purpose}}</td>
+<td><a href="#">{{medicaleRocords.title}}</a></td>
 <td>
 <h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-01.jpg" alt="User Image">
+<a href="#" class="avatar avatar-sm me-2">
+{% if medicaleRocords.hospital.user_profile.proPic %}
+<img src="/media/{{medicaleRocords.hospital.user_profile.proPic}}" > 
+{% else %}
+<img src="/media/avater.png" >
+{% endif %}
 </a>
-<a href="doctor-profile.html">Dr. Ruby Perrin <span>Dental</span></a>
+<a href="#">{{medicaleRocords.hospital.first_name}} {{medicaleRocords.hospital.last_name}}<span>@{{medicaleRocords.hospital.username}}</span></a>
 </h2>
 </td>
 <td class="text-end">
@@ -744,228 +359,17 @@
 </div>
 </td>
 </tr>
-<tr>
-<td><a href="javascript:void(0);">#MR-0009</a></td>
-<td>13 Nov 2019</td>
-<td>Teeth Cleaning</td>
-<td><a href="#">dental-test.pdf</a></td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Darren Elder <span>Dental</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td><a href="javascript:void(0);">#MR-0008</a></td>
-<td>12 Nov 2019</td>
-<td>General Checkup</td>
-<td><a href="#">cardio-test.pdf</a></td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-03.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Deborah Angel <span>Cardiology</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td><a href="javascript:void(0);">#MR-0007</a></td>
-<td>11 Nov 2019</td>
-<td>General Test</td>
-<td><a href="#">general-test.pdf</a></td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-04.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Sofia Brient <span>Urology</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td><a href="javascript:void(0);">#MR-0006</a></td>
-<td>10 Nov 2019</td>
-<td>Eye Test</td>
-<td><a href="#">eye-test.pdf</a></td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-05.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Marvin Campbell <span>Ophthalmology</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td><a href="javascript:void(0);">#MR-0005</a></td>
-<td>9 Nov 2019</td>
-<td>Leg Pain</td>
-<td><a href="#">ortho-test.pdf</a></td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-06.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Katharine Berthold <span>Orthopaedics</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td><a href="javascript:void(0);">#MR-0004</a></td>
-<td>8 Nov 2019</td>
-<td>Head pain</td>
-<td><a href="#">neuro-test.pdf</a></td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-07.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Linda Tobin <span>Neurology</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td><a href="javascript:void(0);">#MR-0003</a></td>
-<td>7 Nov 2019</td>
-<td>Skin Alergy</td>
-<td><a href="#">alergy-test.pdf</a></td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-08.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Paul Richard <span>Dermatology</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td><a href="javascript:void(0);">#MR-0002</a></td>
-<td>6 Nov 2019</td>
-<td>Dental Removing</td>
-<td><a href="#">dental-test.pdf</a></td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-09.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. John Gibbs <span>Dental</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-</div>
-</td>
-</tr>
-<tr>
-<td><a href="javascript:void(0);">#MR-0001</a></td>
-<td>5 Nov 2019</td>
-<td>Dental Filling</td>
-<td><a href="#">dental-test.pdf</a></td>
-<td>
-<h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-10.jpg" alt="User Image">
-</a>
-<a href="doctor-profile.html">Dr. Olga Barlow <span>Dental</span></a>
-</h2>
-</td>
-<td class="text-end">
-<div class="table-action">
-<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
-</a>
-<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
-</a>
-</div>
-</td>
-</tr>
+
+{% endfor %}
+
 </tbody>
 </table>
 </div>
 </div>
 </div>
 </div>
+
+
 
 
 <div id="pat_billing" class="tab-pane fade">

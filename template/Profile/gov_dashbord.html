@@ -36,7 +36,7 @@
 <nav class="dashboard-menu">
 <ul>
 <li class="active">
-<a href="{% url 'Accountapp:patient_dashboard' %}">
+<a href="{% url 'Accountapp:gov_dashbord' %}">
 <i class="fas fa-columns"></i>
 <span>Dashboard</span>
 </a>
@@ -45,7 +45,7 @@
 {% if user.user_profile.proPic %}
 <a href="{% url 'Accountapp:ProPicChange' %}">
 <i class="fas fa-bookmark"></i>
-<span>Change Profile picture</span>
+<span>Change Profile picture</span></a>
 {% else %}
 <a href="{% url 'Accountapp:AddProPic' %}">
 <i class="fas fa-bookmark"></i>
@@ -122,15 +122,15 @@
 <div class="card">
 <div class="card-body ">
 <div class="">
-<h5> <a href="" class="btn-link btn-sm">total user 95 </a></h5>
+<h5> <a href="{% url 'Accountapp:search' %}" class="btn-link btn-sm">total user </a>( {{user_list}} )</h5>
 </div>
-<h5> <a href="" class="btn-link btn-sm">total Doctor (5) </a></h5>
-<h5> <a href="" class="btn-link btn-sm">total patient (35) </a></h5>
-<h5> <a href="" class="btn-link btn-sm">total labrotory (3) </a></h5>
-<h5> <a href="" class="btn-link btn-sm">total Hospital (5) </a></h5>
-<h5> <a href="" class="btn-link btn-sm">total Pharmecy (4) </a></h5>
-<h5> <a href="" class="btn-link btn-sm">total Govt employ (4) </a></h5>
-<h5> <a href="" class="btn-link btn-sm">total Pharmaceutical Pharm (4) </a></h5>
+<h5> <a href="" class="btn-link btn-sm">total Doctor </a>( {{doctor_list}} )</h5>
+<h5> <a href="" class="btn-link btn-sm">total patient</a>( {{patient_List}} )</h5>
+<h5> <a href="" class="btn-link btn-sm">total labrotory</a>( {{lab_list}} )</h5>
+<h5> <a href="" class="btn-link btn-sm">total Hospital</a>( {{hospital_list}} )</h5>
+<h5> <a href="" class="btn-link btn-sm">total Pharmecy</a>( {{phar_list}} )</h5>
+<h5> <a href="" class="btn-link btn-sm">total Govt employ</a>( {{patient_List}} )</h5>
+<h5> <a href="" class="btn-link btn-sm">total Pharmaceutical Pharm</a>( {{pharmacuticalfarm_list}} )</h5>
 
 
 </div>
@@ -140,15 +140,15 @@
 <div class="card">
 <div class="card-body ">
 <div class="">
-<h5> <a href="" class="btn-link btn-sm">verified doctor 95 </a></h5>
+<h5> <a href="" class="btn-link btn-sm">verified doctor</a>({{verified_doctor}})</h5>
 </div>
-<h5> <a href="" class="btn-link btn-sm">verification required Doctor (5) </a></h5>
-<h5> <a href="" class="btn-link btn-sm">verified labrotory (35) </a></h5>
-<h5> <a href="" class="btn-link btn-sm">verification required labrotory (3) </a></h5>
-<h5> <a href="" class="btn-link btn-sm">verified Hospital (4) </a></h5>
-<h5> <a href="" class="btn-link btn-sm">verification required Hospital (5) </a></h5>
-<h5> <a href="" class="btn-link btn-sm">verified Pharmecy (4) </a></h5>
-<h5> <a href="" class="btn-link btn-sm">verification required Pharmecy (4) </a></h5>
+<h5> <a href="" class="btn-link btn-sm">verification required Doctor</a>({{unverified_doctor.count}})</h5>
+<h5> <a href="" class="btn-link btn-sm">verified labrotory</a>({{verified_lab}})</h5>
+<h5> <a href="" class="btn-link btn-sm">verification required labrotory</a>({{unverified_lab}})</h5>
+<h5> <a href="" class="btn-link btn-sm">verified Hospital</a>({{verified_hospital}})</h5>
+<h5> <a href="" class="btn-link btn-sm">verification required Hospital</a>({{unverified_hospital}})</h5>
+<h5> <a href="" class="btn-link btn-sm">verified Pharmecy </a>({{verified_phar}})</h5>
+<h5> <a href="" class="btn-link btn-sm">verification required Pharmecy</a>({{unverified_phar}})</h5>
 
 </div>
 </div>
@@ -254,18 +254,19 @@
 <div class="card-body pt-0">
 
 <nav class="user-tabs mb-4">
-<ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+<h3>Verification required</h3>
+<ul class="nav nav-tabs nav-tabs-bottom nav-justified">   
 <li class="nav-item">
-<a class="nav-link active" href="#pat_appointments" data-bs-toggle="tab">List of Doctor</a>
+<a class="nav-link active" href="#pat_appointments" data-bs-toggle="tab">required Doctor ({{unverified_doctor.count}})</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="#pat_prescriptions" data-bs-toggle="tab">List of Pharmacy</a>
+<a class="nav-link" href="#pat_prescriptions" data-bs-toggle="tab">required labrotory ({{unverified_lab}})</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="#pat_medical_records" data-bs-toggle="tab"><span class="med-records">List of Medical</span></a>
+<a class="nav-link" href="#pat_medical_records" data-bs-toggle="tab"><span class="med-records">required Hospital ({{unverified_hospital}})</span></a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="#pat_billing" data-bs-toggle="tab">List of labretory</a>
+<a class="nav-link" href="#pat_billing" data-bs-toggle="tab">required Pharmecy ({{unverified_phar}})</a>
 </li>
 </ul>
 </nav>
@@ -279,13 +280,12 @@
 <div class="table-responsive">
 <table class="table table-hover table-center mb-0">
 <thead>
+{% for doctors in unverified_doctor %}
 <tr>
-<th>Doctor</th>
-<th>@username</th>
-<th>BM&DC Regi</th>
-<th>Type</th>
-<th>verification</th>
-<th>Status</th>
+<th>@Doctor </th>
+<th>BM&DC Regi  </th>
+<th>Date of birth  </th>
+<th>Status  </th>
 <th></th>
 </tr>
 </thead>
@@ -293,28 +293,35 @@
 <tr>
 <td>
 <h2 class="table-avatar">
-<a href="doctor-profile.html" class="avatar avatar-sm me-2">
-<img class="avatar-img rounded-circle" src="{% static '' %}assets/img/doctors/doctor-thumb-01.jpg" alt="User Image">
+<a href="#" class="avatar avatar-sm me-2">
+    {% if doctors.user.user_profile.proPic %}
+    <img src="/media/{{doctors.user.user_profile.proPic}}" > 
+    {% else %}
+    <img src="/media/avater.png" >
+    {% endif %}
 </a>
-<a href="doctor-profile.html">Dr. Ruby Perrin <span>Dental</span></a>
+<a href="doctor-profile.html">{{doctors.user.first_name}}  {{doctors.user.last_name}} <span>@{{doctors.user.username}}</span></a>
 </h2>
  </td>
-<td>14 Nov 2019 <span class="d-block text-info">10.00 AM</span></td>
-<td>12 Nov 2019</td>
-<td>$160</td>
-<td>16 Nov 2019</td>
-<td><span class="badge rounded-pill bg-success-light">Confirm</span></td>
+<td>{{doctors.BmdcRegiNo}} <span class="d-block text-info">Type {{doctors.reg_type}}</span></td>
+<td>{{doctors.date_of_birth}} <span class="d-block text-info">{{doctors.Gender}}</span></td>
+<td>{{doctors.user.email}} <span class="d-block text-info">{{doctors.phone_no}}</span></td>
+
+
 <td class="text-end">
 <div class="table-action">
 <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-<i class="fas fa-print"></i> Print
+<i class="fas fa-print"></i>Confirm verify
 </a>
 <a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-<i class="far fa-eye"></i> View
+<i class="far fa-eye"></i> View profile
 </a>
 </div>
 </td>
 </tr>
+{% endfor %}
+
+
 <tr>
 <td>
 <h2 class="table-avatar">
