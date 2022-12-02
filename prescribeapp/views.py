@@ -69,3 +69,9 @@ def patient_records(request,username):
 
     
 
+@login_required
+def prescrition_detail(request, pk):
+    prescription = Prescription.objects.get(pk=pk)
+    return render(request, 'prescrition_datiel.html', context={'prescription':prescription})
+    
+

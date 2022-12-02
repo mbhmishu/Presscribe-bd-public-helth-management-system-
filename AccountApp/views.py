@@ -205,42 +205,47 @@ def patient_dashboard(request):
 
 @login_required
 def doc_dashboard(request):
-    return render(request, 'Profile/doctor_dashboard.html', context={})
+    patients = PatientInfo.objects.all()[0:5]
+    if request.method == "GET":
+        Search = request.GET.get('Search', '')
+        results = User.objects.filter(username__icontains=Search)[0:1]
+    return render(request, 'Profile/doctor_dashboard.html', context={'results':results,'Search':Search, 'patients':patients})
+
 
 def pharmacy_dashboard(request):
     return render(request, 'Profile/org_dashboard.html', context={})
 
 def ORG_dashboard(request):
-    return render(request, 'Profile/org_dashboard.html', context={})
+    if request.method == "GET":
+        Search = request.GET.get('Search', '')
+        results = User.objects.filter(username__icontains=Search)[0:1]
+    return render(request, 'Profile/org_dashboard.html', context={'results':results,'Search':Search})
 
 
 @login_required
 def gov_dashbord(request):
-    user_list=User.objects.all().count()
+    user_list=User.objects.order_by('username')
+    doctor_list=DoctorInfo.objects.all()
+    patient_List = PatientInfo.objects.all()
+    phar_list = PharInfo.objects.all()
+    hospital_list = OrgInfo.objects.filter(user__is_hospital=True)
+    lab_list = OrgInfo.objects.filter(user__is_labratory=True)
+    pharmacuticalfarm_list = OrgInfo.objects.filter(user__is_pharmacuticalfarm=True)
 
-    doctor_list=DoctorInfo.objects.all().count()
-    verified_doctor=DoctorInfo.objects.filter(user__expecting_ac=True).count()
-    unverified_doctor=DoctorInfo.objects.exclude(user__expecting_ac=True)
+    verified_doctor=User.objects.filter(expecting_ac__expecting__is_doctor=True)
+    verified_phar=User.objects.filter(expecting_ac__expecting__is_pharmacy=True)
+    verified_hospital=User.objects.filter(expecting_ac__expecting__is_hospital=True)
+    verified_lab=User.objects.filter(expecting_ac__expecting__is_labratory=True)
+    verified_phfarm=User.objects.filter(expecting_ac__expecting__is_pharmacuticalfarm=True)
     
-    phar_list = PharInfo.objects.all().count()
-    verified_phar=PharInfo.objects.filter(user__expecting_ac=True).count()
-    unverified_phar=PharInfo.objects.exclude(user__expecting_ac=True).count()
     
-    hospital_list = OrgInfo.objects.filter(user__is_hospital=True).count()
-    verified_hospital=OrgInfo.objects.filter(user__expecting_ac=True).filter(user__is_labratory=True).count()
-    unverified_hospital=OrgInfo.objects.exclude(user__expecting_ac=True).filter(user__is_labratory=True).count()
+    unverified_doctor=User.objects.exclude(expecting_ac__expecting__is_doctor=True).filter(is_doctor=True)
+    unverified_phar=User.objects.exclude(expecting_ac__expecting__is_pharmacy=True).filter(is_pharmacy=True)
+    unverified_hospital=User.objects.exclude(expecting_ac__expecting__is_hospital=True).filter(is_hospital=True)
+    unverified_lab=User.objects.exclude(expecting_ac__expecting__is_labratory=True).filter(is_labratory=True)
+    unverified_phfarm=User.objects.exclude(expecting_ac__expecting__is_pharmacuticalfarm=True).filter(is_pharmacuticalfarm=True)
 
-    patient_List = PatientInfo.objects.all().count()
-    
-    lab_list = OrgInfo.objects.filter(user__is_labratory=True).count()
-    verified_lab=OrgInfo.objects.filter(user__expecting_ac=True).filter(user__is_labratory=True).count()
-    unverified_lab=OrgInfo.objects.exclude(user__expecting_ac=True).filter(user__is_labratory=True).count()
-
-    pharmacuticalfarm_list = OrgInfo.objects.filter(user__is_pharmacuticalfarm=True).count()
-    verified_phfarm=OrgInfo.objects.filter(user__expecting_ac=True).filter(user__is_pharmacuticalfarm=True).count()
-    unverified_phfarm=OrgInfo.objects.exclude(user__expecting_ac=True).filter(user__is_pharmacuticalfarm=True).count()
-
-    return render(request, 'Profile/gov_dashbord.html', context={'unverified_doctor':unverified_doctor,'verified_doctor':verified_doctor,'user_list':user_list,'doctor_list':doctor_list,'patient_List':patient_List,'phar_list':phar_list,'hospital_list':hospital_list,'lab_list':lab_list,'pharmacuticalfarm_list':pharmacuticalfarm_list,'verified_phar':verified_phar,'unverified_phar':unverified_phar,'verified_hospital':verified_hospital,'unverified_hospital':unverified_hospital,'verified_lab':verified_lab, 'unverified_lab':unverified_lab})  
+    return render(request, 'Profile/gov_dashbord.html', context={'unverified_doctor':unverified_doctor,'verified_doctor':verified_doctor,'user_list':user_list,'doctor_list':doctor_list,'patient_List':patient_List,'phar_list':phar_list,'hospital_list':hospital_list,'lab_list':lab_list,'pharmacuticalfarm_list':pharmacuticalfarm_list,'verified_phar':verified_phar,'unverified_phar':unverified_phar,'verified_hospital':verified_hospital,'unverified_hospital':unverified_hospital,'verified_lab':verified_lab, 'unverified_lab':unverified_lab,'verified_phfarm':verified_phfarm,'unverified_phfarm':unverified_phfarm})  
 
 
 @login_required
