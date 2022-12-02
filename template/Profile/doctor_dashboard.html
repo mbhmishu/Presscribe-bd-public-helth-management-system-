@@ -24,10 +24,22 @@
     {% endif %}
 </a>
 <div class="profile-det-info">
-<h3>@Dr.{{user.username}}</h3>
-<h4>{{user.first_name}} {{user.last_name}}</h4>
-<p>BM&DC Regi:{{user.doctor_info.BmdcRegiNo}} &nbsp|&nbsp type:{{user.doctor_info.reg_type}}</p>
-<p>Gender: {{user.doctor_info.Gender}}</p>
+    <div class="patient-details">
+        <h5><i class="fas fa-user"></i>BM&DC Regi: {{user.doctor_info.BmdcRegiNo}} </h5>
+        <h5 ><i class="fa fa-user"></i>Type: {{user.doctor_info.reg_type}}</h5>
+        <h5><i class="fas fa-user"></i>Gender {{user.doctor_info.Gender}}</h5>
+        <h5><i class="fas fa-weight"></i>{{user.doctor_info.date_of_birth|timesince}}&nbsp years old</h5>
+        <h5><i class="fa fa-phone"></i> {{user.doctor_info.phone_no}}</h5>
+        <h5><i class="fa fa-envelope"></i> {{user.email}}</h5>
+        <br>
+        
+        {% if user.expecting_ac %}
+        <h5 ><i class="fas fa fa-check"></i>Varified account </h5>
+        {% else %}
+        <h5 ><i class="fas fa-service"></i>Varification pending </h5>
+        {% endif %}
+        
+        </div>
 
 <div class="patient-details">
 <h5 class="mb-0">{{user.doctor_info.Degree}}</h5>
@@ -143,11 +155,11 @@
 </div>
 <div class="dash-widget-info">
 <h6>Total Patient All time</h6>
-<h3>1500</h3>
+<h6>Developing..</h6>
 </div>
 </div>
 <div class="dash-bottom-content">
-<h6> <span> <i class="fas fa-caret-up"></i> 9.5%</span> last Week</h6>
+<h6> <span> <i class="fas fa-caret-up"></i> Developing..</span> last Week</h6>
 </div>
 </div>
 </div>
@@ -163,7 +175,7 @@
 </div>
 <div class="dash-widget-info">
 <h6>Total Appointements</h6>
-<h3>4587</h3>
+<h6>Developing..</h6>
 </div>
 </div>
 <div class="dash-bottom-content">
@@ -182,12 +194,12 @@
 </div>
 </div>
 <div class="dash-widget-info">
-<h6>Today’s Income</h6>
-<h3>€1454</h3>
+<h6>Developing..</h6>
+<h3>#</h3>
 </div>
 </div>
 <div class="dash-bottom-content low-percent">
-<h6> <span> <i class="fas fa-caret-down"></i> 5.5%</span> Yesterday</h6>
+<h6> <span> <i class="fas fa-caret-down"></i> 5.5%</span> Developing..</h6>
 </div>
 </div>
 </div>
@@ -198,79 +210,77 @@
 <div class="card dash-cards">
 <div class="card-header">
 <div class="today-appointment-title">
-<h5 class="mb-0">Today’s Appointments</h5>
+<h5 class="mb-0">Search patient for prescribe</h5>
 <a href="#"><h6 class="mb-0">View All <i class="feather-arrow-right"></i></h6></a>
 </div>
 </div>
 <div class="card-body">
 <div class="table-responsive">
 <table class="table table-hover table-center mb-0">
-<tbody>
-<tr>
-<td>
-<h2 class="table-avatar ">
-<a href="#" class="avatar avatar-m me-2"><img class="avatar-img" src="{% static '' %}assets/img/patients/patient.jpg" alt="User Image"></a>
-<a href="#">Richard<span>#PT0016</span></a>
-</h2>
-</td>
-<td>
-<div class="consult-type d-flex flex-column">
-<h6 class="mb-0">Online Consultation</h6>
-<p class="mb-0"><img src="{% static '' %}assets/img/icons/video-icon-sm.svg" alt=""> Video Call</p>
+    
+        <form class="form-control datetimepicker" method="GET">
+        <div class="input-group">
+        <input type="text" class="form-control" name="Search" placeholder="Search by user name">
+        &nbsp 
+        <div class="input-group-btn">
+        <button class="btn btn-success btn-lg" type="submit">Search</button>
+        </div>
+        </div>
+        </form>
+
+
+<div>
+{% if Search %}    
+{% for result in results %}
+<div class="card">
+<div class="card-body">
+<div class="doctor-widget">
+<div class="doc-info-left">
+
+<div class="doctor-img">
+<a href="{% url 'Accountapp:view_all_profile' username=result.username %}">
+{% if result.user_profile.proPic %}
+<img src="/media/{{result.user_profile.proPic}}" width="60px" height="60px" > 
+{% else %}
+<img src="/media/avater.png" width="100px" height="100px" >
+{% endif %}
+</a>
 </div>
-</td>
-<td class="text-center"><a class="call-status" href="#">Start&nbsp;Call</a></td>
-<td class="text-center"><a href="#"><i class="fas fa-chevron-right"></i></a></td>
-</tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="#" class="avatar avatar-m me-2"><img class="avatar-img" src="{% static '' %}assets/img/patients/patient2.jpg" alt="User Image"></a>
-<a href="#">Wilson <span>#PT0016</span></a>
-</h2>
-</td>
-<td>
-<div class="consult-type d-flex flex-column">
-<h6 class="mb-0">Online Consultation</h6>
-<p class="mb-0"><img src="{% static '' %}assets/img/icons/video-icon-sm.svg" alt=""> Video Call</p>
+
+<div class="doc-info-cont">
+<h4 class="doc-name"><a href="#">{{result.username}}</a></h4>
+<p class="doc-speciality">{{result.first_name}} {{result.lastst_name}}</p>
+
+{% if result.is_patient %}
+<h5 class="doc-department">Patient</h5>
+{% elif result.is_doctor %}
+<h5 class="doc-department">Doctor</h5>
+{% else %}
+<h5 class="doc-department">Service holder</h5>
+{% endif %}
+
+
 </div>
-</td>
-<td class="text-center"><a class="call-status" href="#">Join Call</a></td>
-<td class="text-center"><a href="#"><i class="fas fa-chevron-right"></i></a></td>
-</tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="#" class="avatar avatar-m me-2"><img class="avatar-img" src="{% static '' %}assets/img/patients/patient3.jpg" alt="User Image"></a>
-<a href="#">James <span>#PT0016</span></a>
-</h2>
-</td>
-<td>
-<div class="consult-type d-flex flex-column">
-<h6 class="mb-0">Online Consultation</h6>
-<p class="mb-0"><img src="{% static '' %}assets/img/icons/audio-icon-sm.svg" alt="">Audio Call</p>
 </div>
-</td>
-<td class="text-center"><a class="call-status" href="#">Join Call</a></td>
-<td class="text-center"><a href="#"><i class="fas fa-chevron-right"></i></a></td>
-</tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="#" class="avatar avatar-m me-2"><img class="avatar-img" src="{% static '' %}assets/img/patients/patient4.jpg" alt="User Image"></a>
-<a href="#">Hendry <span>#PT0016</span></a>
-</h2>
-</td>
-<td>
-<div class="consult-type d-flex flex-column">
-<h6 class="mb-0">Online Consultation</h6>
-<p class="mb-0"><img src="{% static '' %}assets/img/icons/chat-sm.svg" alt=""> Chat</p>
+<div class="doc-info-right">
+<div class="clini-infos">
+
 </div>
-</td>
-<td class="text-center"><a class="call-status" href="#">Ongoing</a></td>
-<td class="text-center"><a href="#"><i class="fas fa-chevron-right"></i></a></td>
-</tr>
-</tbody>
+<div class="clinic-booking">
+<a class="view-pro-btn" href="{% url 'Accountapp:view_all_profile' username=result.username %}">View Profile</a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endfor %} 
+{% endif %}          
+</div>
+
+
+
+
 </table>
 </div>
 </div>
@@ -280,50 +290,31 @@
 <div class="card dash-cards">
 <div class="card-header">
 <div class="today-appointment-title">
-<h5 class="mb-0">Patients</h5>
-<a href="#"><h6 class="mb-0">View All<i class="feather-arrow-right"></i></h6></a>
+<h5 class="mb-0">Recent Patients</h5>
+{% comment %} <a href="#"><h6 class="mb-0">View All<i class="feather-arrow-right"></i></h6></a> {% endcomment %}
 </div>
 </div>
 <div class="card-body">
 <div class="table-responsive">
 <table class="table table-hover table-center mb-0">
 <tbody>
+ {% for paitent in patients %}   
 <tr>
 <td>
 <h2 class="table-avatar">
-<a href="#" class="avatar avatar-m me-2"><img class="avatar-img" src="{% static '' %}assets/img/patients/patient.jpg" alt="User Image"></a>
-<a href="#">Richard<span>#PT0016</span></a>
+    <a href="{% url 'Accountapp:view_all_profile' username=paitent.user.username %}" class="avatar avatar-m me-2">
+        {% if paitent.user.user_profile.proPic %}
+        <img src="/media/{{paitent.user.user_profile.proPic}}" class="avatar-img"> 
+        {% else %}
+        <img src="/media/avater.png" class="avatar-img">
+        {% endif %}
+    </a>
+<a href="#">{{paitent.user.username}}<span>{{paitent.user.first_name}} &nbsp {{paitent.user.lastname}}</span></a>
 </h2>
 </td>
 <td class="text-center"><a href="#"><i class="fas fa-chevron-right"></i></a></td>
 </tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="#" class="avatar avatar-m me-2"><img class="avatar-img" src="{% static '' %}assets/img/patients/patient2.jpg" alt="User Image"></a>
-<a href="#">Wilson<span>#PT0016</span></a>
-</h2>
-</td>
-<td class="text-center"><a href="patient-profile.html"><i class="fas fa-chevron-right"></i></a></td>
-</tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="#" class="avatar avatar-m me-2"><img class="avatar-img" src="{% static '' %}assets/img/patients/patient3.jpg" alt="User Image"></a>
-<a href="#">James <span>#PT0016</span></a>
-</h2>
-</td>
-<td class="text-center"><a href="#"><i class="fas fa-chevron-right"></i></a></td>
-</tr>
-<tr>
-<td>
-<h2 class="table-avatar">
-<a href="#" class="avatar avatar-m me-2"><img class="avatar-img" src="{% static '' %}assets/img/patients/patient4.jpg" alt="User Image"></a>
-<a href="#">Hendry<span>#PT0016</span></a>
-</h2>
-</td>
-<td class="text-center"><a href="#"><i class="fas fa-chevron-right"></i></a></td>
-</tr>
+{% endfor %}
 </tbody>
 </table>
 </div>

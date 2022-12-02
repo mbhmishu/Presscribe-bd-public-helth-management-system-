@@ -24,13 +24,30 @@
 <a  href="#"><img src="/media/avater.png" width="150px" height="150px" class="rounded-circle"></a>
 {% endif %}
 </div>
+&nbsp;&nbsp;&nbsp;&nbsp;
 <div class="doc-info-cont">
-<h4 class="doc-name">@Dr.{{result_user.username}}</h4>
-<h4>{{result_user.first_name}} {{result_user.last_name}}</h4>
-<p>BM&DC Regi: {{result_user.doctor_info.BmdcRegiNo}} &nbsp|&nbsp type: {{result_user.doctor_info.reg_type}}</p>
-<p>Gender: {{result_user.doctor_info.Gender}}</p>
+<h6 class="doc-name">@Dr.{{result_user.username}}</h6>
+<h6>{{result_user.first_name}} {{result_user.last_name}}</h6>
+
 <div class="patient-details">
-<h4 class="mb-0">{{result_user.doctor_info.Degree}}</h4>
+<h5><i class="fas fa-user"></i>BM&DC Regi: {{result_user.doctor_info.BmdcRegiNo}} </h5>
+<h5 ><i class="fa fa-user"></i>Type: {{result_user.doctor_info.reg_type}}</h5>
+<h5><i class="fas fa-user"></i>Gender {{result_user.doctor_info.Gender}}</h5>
+<h5><i class="fas fa-weight"></i>{{result_user.doctor_info.date_of_birth|timesince}}&nbsp years old</h5>
+<h5><i class="fa fa-phone"></i> {{result_user.doctor_info.phone_no}}</h5>
+<h5><i class="fa fa-envelope"></i> {{result_user.email}}</h5>
+<br>
+
+{% if result_user.expecting_ac %}
+<h5 ><i class="fas fa fa-check"></i>Varified account </h5>
+{% else %}
+<h5 ><i class="fas fa-service"></i>Varification pending </h5>
+{% endif %}
+
+</div>
+
+<div class="patient-details">
+<h5 class="mb-0">{{result_user.doctor_info.Degree}}</h5>
 </div>
 <br>
 
@@ -43,7 +60,7 @@
 <span class="d-inline-block average-rating">(35)</span>
 </div>
 <div class="clinic-details">
-<p class="doc-location"><i class="fas fa-map-marker-alt"></i> Newyork, USA - <a href="javascript:void(0);">Get Directions</a></p>
+<p class="doc-location"><i class="fas fa-map-marker-alt"></i> {{result_user.doctor_info.work_location}} - <a href="javascript:void(0);">Get Directions</a></p>
 
 </div>
 <div class="clinic-services">
@@ -56,7 +73,7 @@
 <div class="clini-infos">
 <ul>
 <li><i class="far fa-comment"></i> {{ result_user.review_receiver.count}} Reviews</h6></li>
-<li><i class="fas fa-map-marker-alt"></i> {{result_user.doctor_info.work_location}}</li>
+
 <li><i class="fas fa-phone"></i> {{result_user.doctor_info.phone_no}} </li>
 </ul>
 </div>
@@ -75,7 +92,7 @@
 </a>
 </div>
 <div class="clinic-booking">
-<a class="apt-btn" href="https:{{result_user.doctor_info.website}}">View Web Site</a>
+<a class="apt-btn" href="{{result_user.doctor_info.website}}">View Web Site</a>
 </div>
 </div>
 </div>
@@ -95,7 +112,7 @@
 <a class="nav-link" href="#doc_locations" data-bs-toggle="tab">Locations</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="#doc_reviews" data-bs-toggle="tab">Reviews</a>
+<a class="nav-link" href="#doc_reviews" data-bs-toggle="tab">Reviews {{ result_user.review_receiver.count}}</a>
 </li>
 </ul>
 </nav>
@@ -448,7 +465,7 @@ $350
 
 <div class="all-feedback text-center">
 <a href="#" class="btn btn-primary btn-sm">
-Show all feedback <strong>(167)</strong>
+Show all reviews <strong></strong>
 </a>
 </div>
 

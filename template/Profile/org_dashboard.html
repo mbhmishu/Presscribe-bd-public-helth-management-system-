@@ -31,7 +31,7 @@
 <p>last update reg:: {{user.org_info.last_updated_regi}} {{user.pharmeci_info.last_updated_regi}}</p>
 
 <div class="patient-details">
-<h5 class="mb-0">{{user.org_info.services}} {{user.pharmeci_info.services}}</h5>
+<h5 class="mb-0">{{user.org_info.services|linebreaks}} {{user.pharmeci_info.services|linebreaks}}</h5>
 </div>
 </div>
 </div>
@@ -147,12 +147,12 @@
 </div>
 </div>
 <div class="dash-widget-info">
-<h6>Total Patient All time</h6>
-<h3>1500</h3>
+<h6>Developing....</h6>
+<h3>Developing....</h3>
 </div>
 </div>
 <div class="dash-bottom-content">
-<h6> <span> <i class="fas fa-caret-up"></i> 9.5%</span> last Week</h6>
+<h6> <span> <i class="fas fa-caret-up"></i> Developing....</span> Developing....</h6>
 </div>
 </div>
 </div>
@@ -187,12 +187,12 @@
 </div>
 </div>
 <div class="dash-widget-info">
-<h6>##</h6>
-<h3>##</h3>
+<h6>Developing....</h6>
+<h3>Developing....</h3>
 </div>
 </div>
 <div class="dash-bottom-content low-percent">
-<h6> <span> <i class="fas fa-caret-down"></i> ##</span> ##</h6>
+<h6> <span> <i class="fas fa-caret-down"></i> Developing....</span> Developing....</h6>
 </div>
 </div>
 </div>
@@ -203,13 +203,77 @@
 <div class="card dash-cards">
 <div class="card-header">
 <div class="today-appointment-title">
-<h5 class="mb-0">ganarate many recet</h5>
+<h5 class="mb-0">Search patient for services</h5>
 
 </div>
 </div>
 <div class="card-body">
 <div class="table-responsive">
-<b>form</b>
+
+
+    <form class="form-control datetimepicker" method="GET">
+        <div class="input-group">
+        <input type="text" class="form-control" name="Search" placeholder="Search by user name">
+        &nbsp 
+        <div class="input-group-btn">
+        <button class="btn btn-success btn-lg" type="submit">Search</button>
+        </div>
+        </div>
+    </form>
+
+    <div>
+        {% if Search %}    
+        {% for result in results %}
+        <div class="card">
+        <div class="card-body">
+        <div class="doctor-widget">
+        <div class="doc-info-left">
+        
+        <div class="doctor-img">
+        <a href="{% url 'Accountapp:view_all_profile' username=result.username %}">
+        {% if result.user_profile.proPic %}
+        <img src="/media/{{result.user_profile.proPic}}" width="60px" height="60px" > 
+        {% else %}
+        <img src="/media/avater.png" width="100px" height="100px" >
+        {% endif %}
+        </a>
+        </div>
+        
+        <div class="doc-info-cont">
+        <h4 class="doc-name"><a href="#">{{result.username}}</a></h4>
+        <p class="doc-speciality">{{result.first_name}} {{result.lastst_name}}</p>
+        
+        {% if result.is_patient %}
+        <h5 class="doc-department">Patient</h5>
+        {% elif result.is_doctor %}
+        <h5 class="doc-department">Doctor</h5>
+        {% else %}
+        <h5 class="doc-department">Service holder</h5>
+        {% endif %}
+        
+        
+        </div>
+        </div>
+        <div class="doc-info-right">
+        <div class="clini-infos">
+        
+        </div>
+        <div class="clinic-booking">
+        <a class="view-pro-btn" href="{% url 'Accountapp:view_all_profile' username=result.username %}">View Profile</a>
+        
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        {% endfor %} 
+        {% endif %}          
+    </div>
+    
+
+
+
+
 </div>
 </div>
 </div>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% extends 'Profile/base.html' %}
+{% load static %}
+
+
+
+
+{% block body_block %}
+
+
+<div class="tab-content pt-0">
+
+    <div id="pat_appointments" class="tab-pane fade show active">
+    <div class="card card-table mb-0">
+    <div class="card-body">
+    <div class="table-responsive">
+    <table class="table table-hover table-center mb-0">
+    <thead>
+    <tr>
+    <th>Appt Date</th>
+    <th>purpose</th>
+    <th>Disease</th>
+    <th>Test</th>  
+    <th>Doctor</th>
+    <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    
+    <tr>    
+    <td>{{prescription.creat_date|date}} <span class="d-block text-info">{{prescription.creat_date|time}}</span></td>
+    <td>{{prescription.purpose}}</td> 
+    <td>{{prescription.disease|linebreaks}}</td>
+    <td>{{prescription.test|linebreaks}}</td>    
+    <td>
+    <h2 class="table-avatar">
+    <a href="#" class="avatar avatar-sm me-2">
+    
+    {% if prescription.doctor.user_profile.proPic %}
+    <img src="/media/{{prescription.doctor.user_profile.proPic}}" > 
+    {% else %}
+    <img src="/media/avater.png" >
+    {% endif %}
+    
+    </a>
+    
+    <a href="#">{{prescription.doctor.first_name}} {{prescription.doctor.last_name}}<span>@Dr.{{prescription.doctor.username}}</span></a>
+    </h2>
+     </td>
+    
+    
+    <td>
+        
+    </td>
+    </tr>
+    
+    
+    </tbody>
+    </table>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+
+{% endblock %}
